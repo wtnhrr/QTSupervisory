@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QTimer>
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -19,13 +20,15 @@ public:
     ~MainWindow();
 
 public slots:
-    void putData();
+    void getData();
+    void timming();
     void tcpConnect();
     void tcpDisconnect();
     void start();
     void stop();
-    void valores();
-    void intervalo();
+    void update();
+    void interval();
+    void getIps();
 
 private:
     Ui::MainWindow *ui;
@@ -33,5 +36,6 @@ private:
     QTcpSocket *socket;
     QTimer *timing;
     QString ip;
+    QStringList iplist;
 };
 #endif // MAINWINDOW_H

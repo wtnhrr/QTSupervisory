@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent):
 
     socket = new QTcpSocket(this);
 
-    timer = new QTimer(this);
-    timer->setInterval(1000);
+    timing = new QTimer(this);
+    timing->setInterval(1000);
 
     tcpConnect();
     valores();
@@ -57,11 +57,9 @@ void MainWindow::tcpConnect()
     socket->connectToHost(ip,1234);
 
     if(socket->waitForConnected()){
-        qDebug() << "Conectado";
-        ui->textBrowser->setText("Conectado\n");
+        ui->textBrowser->append("Conectado\n");
     } else{
-        qDebug() << "Falha ao conectar";
-        ui->textBrowser->setText("Desconectado\n");
+        ui->textBrowser->append("Desconectado\n");
     }
 }
 
@@ -69,7 +67,7 @@ void MainWindow::tcpDisconnect()
 {
     socket->disconnectFromHost();
     qDebug() << "Desconectado\n";
-    ui->textBrowser->setText("Desconectado\n");
+    ui->textBrowser->append("Desconectado\n");
 }
 
 void MainWindow::putData()
@@ -110,18 +108,18 @@ void MainWindow::valores()
 void MainWindow::intervalo()
 {
     int interval = ui->horizontalSliderTiming->value();
-    timer->setInterval(interval * 1000);
+    timing->setInterval(interval * 1000);
 }
 
 void MainWindow::start()
 {
-    connect(timer, &QTimer::timeout, this, &MainWindow::putData);
-    ui->textBrowser->setText("starting\n");
-    timer->start();
+    connect(timing, &QTimer::timeout, this, &MainWindow::putData);
+    ui->textBrowser->append("starting\n");
+    timing->start();
 }
 
 void MainWindow::stop()
 {
-    ui->textBrowser->setText("stopping\n");
-    timer->stop();
+    ui->textBrowser->append("stopping\n");
+    timing->stop();
 }
