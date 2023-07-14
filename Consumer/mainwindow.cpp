@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     timing = new QTimer(this);
     timing->setInterval(1000);
 
+
     connect(ui->pushButtonConnect,
             SIGNAL(clicked(bool)),
             this,
@@ -27,6 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
             SIGNAL(clicked(bool)),
             this,
             SLOT(tcpDisconnect()));
+
+    connect(ui->pushButtonUpdate,
+            SIGNAL(clicked(bool)),
+            this,
+            SLOT(listIps()));
 
     connect(ui->horizontalSliderTiming,
             SIGNAL(valueChanged(int)),
@@ -41,9 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
             SIGNAL(clicked(bool)),
             this,
             SLOT(stop()));
-
-    QStringList list;
-    getIps();
 }
 
 MainWindow::~MainWindow()
@@ -53,7 +56,33 @@ MainWindow::~MainWindow()
 
 void MainWindow::getData()
 {
+    QString str;
+    QByteArray array;
+    QStringList list;
+    qint64 thetime;
 
+    qDebug() << "to get data...";
+    if(socket->state() == QAbstractSocket::ConnectedState){
+        if(socket->isOpen()){
+            qDebug() << "reading...";
+            socket->write("get 127.0.0.1 5\r\n");
+            socket->waitForBytesWritten();
+            socket->waitForReadyRead();
+            qDebug() << socket->bytesAvailable();
+
+            while(socket->bytesAvailable()){
+                str = socket->readLine().replace("\n","").replace("\r","");
+                list = str.split(" ");
+                if(list.size() == 2){
+                    bool ok;
+                    str = list.at(0);
+                    thetime = str.toLongLong(&ok);
+                    str = list.at(1);
+                    qDebug() << thetime << ": " << str;
+                }
+            }
+        }
+    }
 }
 
 void MainWindow::timming()
@@ -87,36 +116,38 @@ void MainWindow::stop()
     timing->stop();
 }
 
-void MainWindow::update()
-{
-
-}
-
 void MainWindow::interval()
 {
     int interval = ui->horizontalSliderTiming->value();
     timing->setInterval(interval * 1000);
 }
 
-void MainWindow::getIps()
+void MainWindow::listIps()
 {
-    QString str;
-    qDebug() << "Pegando a lista de IPs de produtores...";
+    QString str, list;
+    QListWidget* item = ui->listIps;
 
-    if (socket->state() != QAbstractSocket::ConnectedState || !socket->isOpen())
-    {
-        return;
-    }
-
-    socket->write("list\r\n");
-    socket->waitForBytesWritten();
-    socket->waitForReadyRead();
-    qDebug() << socket->bytesAvailable();
+    list = "list\r\n";
     ui->listIps->clear();
+    if(socket->state() == QAbstractSocket::ConnectedState){
+        if(socket->isOpen()){
 
-    while (socket->bytesAvailable())
-    {
-        str = socket->readLine().replace("\n", "").replace("\r", "");
-        ui->listIps->addItem(str);
+            socket->write(list.toStdString().c_str());
+            socket->waitForBytesWritten();
+            socket->waitForReadyRead();
+            qDebug() << socket->bytesAvailable();
+            while(socket->bytesAvailable()){
+                str = socket->readLine().replace("\n","").replace("\r","");
+                qDebug() << str;
+                ui->listIps->addItem(str);
+            }
+        }
     }
+}
+
+void MainWindow::update()
+{
+    tcpDisconnect();
+    QListWidgetItem *item = ui->listIps->currentItem();
+    ui->lineEditIPServer->setText(item->text());
 }

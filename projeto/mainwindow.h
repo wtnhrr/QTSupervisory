@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QDebug>
 #include <QTimer>
+#include <QSet>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,5 +34,6 @@ private:
     QTcpSocket *socket;
     QTimer *timing;
     QString ip;
+    QSet<QString> ipSet;
 };
 #endif // MAINWINDOW_H
