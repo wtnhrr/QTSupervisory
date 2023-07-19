@@ -6,155 +6,95 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>691</width>
-    <height>525</height>
+    <width>560</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButtonDesconnect">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>69</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Desconnect</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonConnect">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>69</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Connect</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonUpdate">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>359</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Update</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonStart">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>440</y>
-      <width>121</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Start</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButtonStop">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>440</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Stop</string>
-    </property>
-   </widget>
-   <widget class="QListWidget" name="listIps">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>110</y>
-      <width>251</width>
-      <height>231</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEditIPServer">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>30</y>
-      <width>251</width>
-      <height>24</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QSlider" name="horizontalSliderTiming">
-    <property name="geometry">
-     <rect>
-      <x>29</x>
-      <y>410</y>
-      <width>251</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>390</y>
-      <width>49</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Timing(s)</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>10</y>
-      <width>81</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>IP do Servidor</string>
-    </property>
-   </widget>
-   <widget class="Plotter" name="widget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>30</y>
-      <width>381</width>
-      <height>431</height>
-     </rect>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>IP do Servidor</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QLineEdit" name="lineEditIPServer"/>
+    </item>
+    <item row="1" column="2" rowspan="7">
+     <widget class="Plotter" name="widget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>300</width>
+        <height>300</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="pushButtonConnect">
+      <property name="text">
+       <string>Connect</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QPushButton" name="pushButtonDesconnect">
+      <property name="text">
+       <string>Desconnect</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QPushButton" name="pushButtonUpdate">
+      <property name="text">
+       <string>Update</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Timing(s)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0" colspan="2">
+     <widget class="QSlider" name="horizontalSliderTiming">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QPushButton" name="pushButtonStart">
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QPushButton" name="pushButtonStop">
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="2">
+     <widget class="QListWidget" name="listIps"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>691</width>
+     <width>560</width>
      <height>21</height>
     </rect>
    </property>
